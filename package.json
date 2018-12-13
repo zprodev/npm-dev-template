@@ -1,10 +1,21 @@
 {
-  "name": "example",
+  "name": "",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/cjs/example.js",
+  "module": "dist/esm/example.js",
+  "types": "dist/dts/example.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run tsc:esm && npm run tsc:cjs && npm run rollup && npm run uglify:browser && npm run uglify:esm",
+    "tsc:esm": "tsc --outDir dist/esm --declaration --declarationDir dist/dts",
+    "tsc:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "rollup": "rollup -c",
+    "uglify:browser": "uglifyjs dist/bundle/browser/example.js -o dist/bundle/browser/example.min.js -cm --comments --source-map",
+    "uglify:esm": "uglifyjs dist/bundle/esm/example.js -o dist/bundle/esm/example.min.js -cm --comments --source-map"
   },
   "repository": {
     "type": "git",
@@ -18,5 +29,11 @@
   "bugs": {
     "url": "https://github.com/example/example/issues"
   },
-  "homepage": "https://github.com/example/example#readme"
+  "homepage": "https://github.com/example/example#readme",
+  "devDependencies": {
+    "rollup": "^0.67.4",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "typescript": "^3.2.2",
+    "uglify-es": "^3.3.9"
+  }
 }
